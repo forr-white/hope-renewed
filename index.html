@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Hope Renewed LLC — Biohazard & Trauma Scene Cleanup</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="icon" href="images/logo.png" type="image/png">
+<style>
+.response {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.response.show { opacity: 1; }
+.response.success { color: #16a34a; }
+.response.error { color: #dc2626; }
+</style>
+</head>
+<body>
+
+<div class="top-strip">
+  EMERGENCY 24/7 RESPONSE — CALL NOW: <a class="phone" href="tel:9363375993">936-337-5993</a>
+</div>
+
+<header>
+  <div class="brand">
+    <img src="images/logo.png" alt="Hope Renewed LLC logo" class="logo">
+    <div>
+      <h1>Hope Renewed LLC</h1>
+      <p>Compassionate biohazard & trauma scene cleanup — Conroe, Houston & surrounding areas</p>
+    </div>
+  </div>
+  <a class="btn-call" href="tel:9363375993">Call: 936-337-5993</a>
+</header>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">AMDECON CERTIFIED • LICENSED & INSURED • 24/7 EMERGENCY RESPONSE</div>
+    <h2>Discreet. Compassionate. Professional.</h2>
+    <p class="lead">
+      Hope Renewed LLC provides expert biohazard and trauma scene cleanup services across Conroe, Houston, and surrounding areas. 
+      Our certified technicians respond 24/7 to crime scenes, unattended deaths, suicides, hoarding, and decomposition cases, ensuring a safe, thorough, and respectful restoration of safety to your property.
+    </p>
+
+    <div class="trusted">
+      <div class="badge">Rapid 24/7 Emergency Response</div>
+      <div class="badge amdecon">AMDECON Certified & Licensed Professionals</div>
+      <div class="badge">Compassionate Care for Sensitive Situations</div>
+    </div>
+
+    <p class="lead" style="margin-top: 15px;">
+      We understand the emotional and physical challenges these situations bring. Every cleanup is handled discreetly, safely, and with the highest standards of biohazard remediation. From containment to odor control and full sanitization, your safety and peace of mind are our priority.
+    </p>
+  </div>
+
+    <aside class="card">
+      <h3>Request a Call Back</h3>
+      <p>Fast response — fill out this form and we’ll contact you immediately.</p>
+
+      <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+      <form id="contact-form" method="POST" action="https://script.google.com/macros/s/AKfycbxUu4-1xg55xMKWp7izDnuKS3E8nD6erPtqpUHIyHZkir1le6ysONtMEuaw9bcIAlEH/exec" target="hidden_iframe">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="text" name="phone" placeholder="Phone" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="message" rows="4" placeholder="Describe the situation" required></textarea>
+        <button type="submit" class="submit">Send Request</button>
+      </form>
+
+      <p id="response" class="response"></p>
+    </aside>
+  </section>
+
+  <section class="services">
+    <article class="service-card">
+      <img src="images/person-disinfecting-restricted-area.jpg" alt="Crime scene cleanup professionals">
+      <h4>Crime Scene & Trauma Cleanup</h4>
+      <p>Discreet, respectful cleanup performed by trained professionals using proper biohazard disposal methods.</p>
+    </article>
+
+    <article class="service-card">
+      <img src="images/ppe.svg" alt="Biohazard cleanup gear">
+      <h4>Decomposition & Unattended Death</h4>
+      <p>Comprehensive remediation, odor control, and sanitization for decomposition or unattended deaths.</p>
+    </article>
+
+    <article class="service-card">
+      <img src="images/hoarding.png" alt="Professional hoarding cleanup">
+      <h4>Hoarding Cleanup</h4>
+      <p>Compassionate cleanup and deep sanitization to restore safety and livability in affected environments.</p>
+    </article>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; <span id="year"></span> Hope Renewed LLC | Serving Conroe, Houston & surrounding Texas areas<br>
+  <a href="mailto:forrest.w@hope-renewed.us">forrest.w@hope-renewed.us</a> | 
+  <a href="tel:9363375993">936-337-5993</a></p>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const form = document.getElementById('contact-form');
+const responseEl = document.getElementById('response');
+
+form.addEventListener('submit', function(e) {
+  const phoneInput = form.phone.value.trim();
+  const digits = phoneInput.replace(/\D/g, "");
+
+  if (digits.length !== 10) {
+    e.preventDefault();
+    responseEl.textContent = "❌ Please enter a valid 10-digit phone number.";
+    responseEl.className = "response error show";
+    setTimeout(() => responseEl.classList.remove('show'), 5000);
+    return;
+  }
+
+  // Auto-format phone before submission
+  form.phone.value = `(${digits.substr(0,3)}) ${digits.substr(3,3)}-${digits.substr(6,4)}`;
+
+  responseEl.textContent = "✅ Request sent successfully!";
+  responseEl.className = "response success show";
+
+  setTimeout(() => form.reset(), 100);
+  setTimeout(() => responseEl.classList.remove('show'), 5000);
+});
+</script>
+
+</body>
+</html>
