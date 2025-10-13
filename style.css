@@ -211,6 +211,14 @@ input:focus, textarea:focus {
   margin-bottom: 8px;
 }
 
+.post img {
+  width: 100%;
+  height: 200px; /* adjust height as you like */
+  object-fit: cover; /* ensures the whole image scales & crops proportionally */
+  border-radius: 6px 6px 0 0; /* optional, rounds top corners */
+  display: block;
+}
+
 .blog-section {
   background: #f8f9fb;
   padding: 60px 10%;
@@ -373,6 +381,10 @@ footer a {
   .service-card img {
     height: 200px;
   }
+
+  .post img {
+  height: 160px;
+}
 
   .blog-section {
     padding: 40px 5%;
