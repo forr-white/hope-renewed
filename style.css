@@ -229,6 +229,7 @@ footer a {
     flex-wrap: wrap;
     text-align: center;
     padding: 15px 5%;
+    align-items: center;
   }
 
   .brand {
