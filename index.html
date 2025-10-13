@@ -92,6 +92,56 @@
       <p>Compassionate cleanup and deep disinfection to restore safety and livability in affected environments.</p>
     </article>
   </section>
+
+  <!-- Blog Section -->
+<section class="blog-section">
+  <div class="blog-header">
+    <h2>From Our Blog</h2>
+    <p>Latest updates and insights from Hope Renewed LLC.</p>
+  </div>
+
+  <div class="blog-grid" id="blog-grid">
+    <p>Loading posts...</p>
+  </div>
+</section>
+
+<script>
+  const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBm200lHp9oItNUs3xZGKwJxcgCdPlxUNIRk1QHIrzDvq3GTAxsrB4ThSZFFHYUWmu-yQAY5Qdi4q/pub?gid=0&single=true&output=csv"; // <-- replace with your sheet link
+
+  async function loadBlogPosts() {
+    try {
+      const res = await fetch(sheetUrl);
+      const csv = await res.text();
+      const rows = csv.split("\n").slice(1);
+      const container = document.getElementById("blog-grid");
+      container.innerHTML = "";
+
+      rows.forEach(row => {
+        const cols = row.split(",");
+        if (cols.length < 4) return;
+        const [title, image, excerpt, link] = cols.map(x => x.replace(/"/g, "").trim());
+
+        const post = document.createElement("article");
+        post.className = "post";
+        post.innerHTML = `
+          <img src="${image}" alt="${title}">
+          <div class="post-content">
+            <h3>${title}</h3>
+            <p>${excerpt}</p>
+            <a href="${link}" class="read-more">Read More →</a>
+          </div>
+        `;
+        container.appendChild(post);
+      });
+    } catch (err) {
+      console.error(err);
+      document.getElementById("blog-grid").innerHTML = "<p>Unable to load posts right now.</p>";
+    }
+  }
+
+  loadBlogPosts();
+</script>
+
 </main>
 
 <footer>

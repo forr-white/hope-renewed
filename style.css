@@ -61,6 +61,13 @@ h1 {
   font-size: 1.4rem;
 }
 
+.blog {
+  margin-top: 10px;
+  display: inline-block;
+  align-self: center;
+  text-align: center;
+}
+
 .btn-call {
   background: var(--navy);
   color: var(--white);
@@ -204,6 +211,64 @@ input:focus, textarea:focus {
   margin-bottom: 8px;
 }
 
+.blog-section {
+  background: #f8f9fb;
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.blog-header h2 {
+  font-size: 2rem;
+  color: #0b132b;
+  margin-bottom: 10px;
+}
+
+.blog-header p {
+  color: #444;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.post {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.post:hover {
+  transform: translateY(-5px);
+}
+
+.post-content {
+  padding: 20px;
+}
+
+.post h3 {
+  font-size: 1.3rem;
+  color: #0b132b;
+  margin-bottom: 10px;
+}
+
+.post p {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 12px;
+  color: #5bc0be;
+  font-weight: 600;
+}
+
 /* ========================= */
 /* FOOTER */
 /* ========================= */
@@ -236,6 +301,13 @@ footer a {
   .brand {
     flex-direction: column;
     align-items: center;
+    text-align: center;
+  }
+
+  .blog {
+    margin-top: 10px;
+    display: inline-block;
+    align-self: center;
     text-align: center;
   }
 
@@ -300,6 +372,19 @@ footer a {
 
   .service-card img {
     height: 200px;
+  }
+
+  .blog-section {
+    padding: 40px 5%;
+  }
+  .blog-header h2 {
+    font-size: 1.6rem;
+  }
+  .blog-header p {
+    font-size: 1rem;
+  }
+  .blog-grid {
+    gap: 20px;
   }
 
   footer {
