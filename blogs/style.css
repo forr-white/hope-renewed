@@ -222,7 +222,7 @@ input:focus, textarea:focus {
 .blog-section {
   background: #f8f9fb;
   padding: 60px 10%;
-  text-align: center;
+  text-align: left;
 }
 
 .blog-header h2 {
