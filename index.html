@@ -105,21 +105,23 @@
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 <script>
-  const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBm200lHp9oItNUs3xZGKwJxcgCdPlxUNIRk1QHIrzDvq3GTAxsrB4ThSZFFHYUWmu-yQAY5Qdi4q/pub?gid=0&single=true&output=csv"; // <-- replace with your sheet link
+  const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBm200lHp9oItNUs3xZGKwJxcgCdPlxUNIRk1QHIrzDvq3GTAxsrB4ThSZFFHYUWmu-yQAY5Qdi4q/pub?gid=0&single=true&output=csv";
 
   async function loadBlogPosts() {
     try {
       const res = await fetch(sheetUrl);
       const csv = await res.text();
-      const rows = csv.split("\n").slice(1);
+      const data = Papa.parse(csv, { header: false }).data;
+
+      const rows = data.slice(1); // skip header
       const container = document.getElementById("blog-grid");
       container.innerHTML = "";
 
-      rows.forEach(row => {
-        const cols = row.split(",");
+      rows.forEach(cols => {
         if (cols.length < 4) return;
-        const [title, image, excerpt, link] = cols.map(x => x.replace(/"/g, "").trim());
+        const [title, image, excerpt, link] = cols.map(x => x.trim());
 
         const post = document.createElement("article");
         post.className = "post";
@@ -141,6 +143,7 @@
 
   loadBlogPosts();
 </script>
+
 
 </main>
 
