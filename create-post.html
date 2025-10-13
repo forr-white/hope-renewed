@@ -3,141 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog Post Creator | Hope Renewed LLC</title>
+<title>Create Blog Post | Hope Renewed LLC</title>
 <style>
-body { font-family:'Inter',sans-serif; background:#f8fafc; color:#0b2545; padding:20px; }
-h1 { text-align:center; margin-bottom:30px; }
-label { display:block; font-weight:600; margin-top:15px; }
-input, textarea { width:100%; padding:10px; margin-top:5px; border-radius:6px; border:1px solid #ccc; font-size:1rem; box-sizing:border-box; }
-textarea { resize:vertical; min-height:150px; }
-button { margin-top:20px; padding:12px 20px; background:#0b2545; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; transition:background 0.3s; }
-button:hover { background:#133767; }
-.response { margin-top:15px; font-weight:600; text-align:center; }
-.success { color:#16a34a; }
-.error { color:#dc2626; }
+  body { font-family: Arial, sans-serif; background:#f8fafc; padding:20px; color:#0b2545; }
+  h1 { text-align:center; }
+  form { max-width:600px; margin:0 auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+  input, textarea { width:100%; padding:10px; margin:8px 0; border-radius:6px; border:1px solid #ccc; font-size:1rem; }
+  button { padding:10px 15px; background:#133767; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:600; }
+  button:hover { background:#0b2545; }
+  .response { text-align:center; margin-top:15px; font-weight:600; }
+  .download { text-align:center; margin-top:20px; }
 </style>
 </head>
 <body>
 
-<h1>Hope Renewed LLC Blog Post Creator</h1>
+<h1>Create Blog Post</h1>
 
-<label>Post Title</label>
-<input type="text" id="title">
+<form id="blog-form" method="POST" action="https://script.google.com/macros/s/AKfycbx4ykvXKP-FqGSe6IOcnaStb0D2jIVD8GY2G1BPFc-TP6hUpYmQb0JgEBPYlha6wGOJ/exec">
+  <input type="text" name="title" placeholder="Post Title" required>
+  <input type="text" name="image" placeholder="Image URL" required>
+  <textarea name="excerpt" rows="4" placeholder="Post Excerpt" required></textarea>
+  <input type="text" name="link" placeholder="Post Link (e.g., posts/post1.html)" required>
+  <button type="submit">Add Post</button>
+</form>
 
-<label>Featured Image URL</label>
-<input type="text" id="image">
-
-<label>Excerpt (short summary)</label>
-<textarea id="excerpt"></textarea>
-
-<label>Content (HTML allowed)</label>
-<textarea id="content"></textarea>
-
-<button id="generate">Generate & Download Post</button>
 <p id="response" class="response"></p>
 
+<div class="download" id="download"></div>
+
 <script>
-const sheetUrl = "https://script.google.com/macros/s/AKfycbyyDsZ3kTsO-9Gn-ZJpJeeclMNHk29MqWkjkO4AKP9N1TuzutBVb_EBGIBpohJCj5Rb/exec"; // Replace with your deployed Web App URL
+const form = document.getElementById('blog-form');
+const responseEl = document.getElementById('response');
+const downloadEl = document.getElementById('download');
 
-function slugify(text){
-  return text.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-}
+form.addEventListener('submit', function(e){
+  e.preventDefault();
 
-document.getElementById('generate').addEventListener('click', async () => {
-  const title = document.getElementById('title').value.trim();
-  const image = document.getElementById('image').value.trim();
-  const excerpt = document.getElementById('excerpt').value.trim();
-  const content = document.getElementById('content').value.trim();
-  const responseEl = document.getElementById('response');
+  const title = form.title.value.trim();
+  const image = form.image.value.trim();
+  const excerpt = form.excerpt.value.trim();
+  const link = form.link.value.trim();
 
-  if (!title || !image || !excerpt || !content) {
-    responseEl.textContent = "❌ Please fill in all fields.";
-    responseEl.className = "response error";
-    return;
-  }
+  if (!title || !image || !excerpt || !link) return;
 
-  const slug = slugify(title);
-  const filename = `${slug}.html`;
-  const postLink = `posts/${filename}`;
-
-  // Generate HTML for download
+  // Create HTML snippet
   const html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${title} | Hope Renewed LLC</title>
-<link rel="icon" href="images/logo.png" type="image/png">
-<style>
-body { font-family:'Inter',sans-serif; background:#f8fafc; color:#0b2545; margin:0; padding:0; line-height:1.6; }
-header { display:flex; justify-content: space-between; align-items:center; padding:20px 8%; background:#fff; box-shadow:0 4px 10px rgba(0,0,0,0.05); }
-.brand { display:flex; align-items:center; gap:12px; }
-.brand h1{margin:0; font-size:1.4rem;}
-.logo {height:60px; width:auto;}
-.btn-call {background:#0b2545;color:#fff;padding:10px 18px;border-radius:6px;font-weight:600;text-decoration:none;}
-.hero {text-align:center; padding:60px 10%; background:#eaeff5;}
-.hero h2 {font-size:2rem; margin-bottom:15px;}
-.hero p {max-width:700px; margin:0 auto; color:#444; font-size:1.1rem;}
-.post-container {padding:40px 10%; max-width:800px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08);}
-.post-container h1 {font-size:2rem; margin-bottom:15px;}
-.post-container img {width:100%; margin-bottom:20px; border-radius:6px;}
-.post-container p {margin-bottom:15px;}
-footer {background:#0b2545; color:#fff; text-align:center; padding:25px 10px; font-size:0.9rem;}
-</style>
-</head>
-<body>
-<header>
-<div class="brand">
-<img src="images/logo.png" alt="Hope Renewed LLC Logo" class="logo">
-<h1>Hope Renewed LLC</h1>
-</div>
-<a href="tel:+19363375993" class="btn-call">📞 Call: 936-337-5993</a>
-</header>
-<section class="hero">
-<h2>${title}</h2>
-<p>${excerpt}</p>
-</section>
-<div class="post-container">
-<img src="${image}" alt="${title}">
-${content}
-</div>
-<footer>
-&copy; ${new Date().getFullYear()} Hope Renewed LLC | Conroe • Houston • Surrounding Areas<br>
-<a href="mailto:forrest.w@hope-renewed.us" style="color:#fff;text-decoration:underline;">forrest.w@hope-renewed.us</a> |
-<a href="tel:9363375993" style="color:#fff;text-decoration:underline;">936-337-5993</a>
-</footer>
-</body>
-</html>`;
+<article class="post">
+  <img src="${image}" alt="${title}">
+  <div class="post-content">
+    <h3>${title}</h3>
+    <p>${excerpt}</p>
+    <a href="${link}" class="read-more">Read More →</a>
+  </div>
+</article>
+  `;
 
-  // Download HTML
-  const blob = new Blob([html], {type:'text/html'});
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = filename;
-  link.click();
+  // Display download link
+  const blob = new Blob([html], {type:"text/html"});
+  const url = URL.createObjectURL(blob);
+  downloadEl.innerHTML = `<a href="${url}" download="${title.replace(/\s+/g,'_')}.html">Download Post HTML</a>`;
 
-  // Post to Google Sheet
-  try {
-    const res = await fetch(sheetUrl, {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ title, image, excerpt, link: postLink })
-    });
-    const data = await res.json();
-
-    if(data.status === "success"){
-      responseEl.textContent = "✅ Blog post added to Google Sheet!";
-      responseEl.className = "response success";
-    } else {
-      responseEl.textContent = `❌ Sheet error: ${data.message}`;
-      responseEl.className = "response error";
-    }
-  } catch(err){
-    responseEl.textContent = `❌ Error posting to sheet: ${err.message}`;
-    responseEl.className = "response error";
-  }
+  responseEl.textContent = "✅ Post HTML generated. Save and/or submit the form below.";
+  form.reset();
 });
 </script>
+
 </body>
 </html>
