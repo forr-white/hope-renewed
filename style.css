@@ -227,6 +227,7 @@ footer a {
 @media (max-width: 600px) {
   header {
     flex-wrap: wrap;
+    flex-direction: column;
     text-align: center;
     padding: 15px 5%;
     align-items: center;
@@ -242,6 +243,7 @@ footer a {
     margin-top: 10px;
     display: inline-block;
     align-self: center;
+    text-align: center;
   }
 
   .logo {
