@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Create Blog Post | Hope Renewed LLC</title>
+<title>Create Full Blog Post | Hope Renewed LLC</title>
 <link rel="stylesheet" href="style.css" />
 <style>
   body { font-family: 'Inter', Arial, sans-serif; background: #f8fafc; color: #0b2545; padding: 40px; }
@@ -15,26 +15,27 @@
   .response { margin-top:15px; font-weight:600; }
   .response.success { color:#16a34a; }
   .response.error { color:#dc2626; }
+  textarea.content { height: 300px; }
 </style>
 </head>
 <body>
 
-<h1>Create a Blog Post for Hope Renewed LLC</h1>
+<h1>Create a Full Blog Post Page</h1>
 
 <form id="blog-form">
   <label for="title">Post Title</label>
   <input type="text" id="title" placeholder="Enter post title" required>
 
-  <label for="image">Image URL</label>
+  <label for="image">Featured Image URL</label>
   <input type="text" id="image" placeholder="Enter full image URL" required>
 
   <label for="excerpt">Excerpt / Summary</label>
-  <textarea id="excerpt" rows="4" placeholder="Enter a short excerpt" required></textarea>
+  <textarea id="excerpt" rows="4" placeholder="Enter a short excerpt (optional)"></textarea>
 
-  <label for="link">Post Link / Full Article URL</label>
-  <input type="text" id="link" placeholder="Enter post link" required>
+  <label for="content">Full Post Content (HTML allowed)</label>
+  <textarea id="content" class="content" placeholder="Write your full blog content here" required></textarea>
 
-  <button type="submit">Generate HTML File</button>
+  <button type="submit">Generate Blog HTML</button>
   <p id="response" class="response"></p>
 </form>
 
@@ -48,32 +49,33 @@ form.addEventListener('submit', function(e){
   const title = document.getElementById('title').value.trim();
   const image = document.getElementById('image').value.trim();
   const excerpt = document.getElementById('excerpt').value.trim();
-  const link = document.getElementById('link').value.trim();
+  const content = document.getElementById('content').value.trim();
 
-  if (!title || !image || !excerpt || !link) {
-    responseEl.textContent = "❌ Please fill out all fields.";
+  if (!title || !content || !excerpt) {
+    responseEl.textContent = "❌ Title, Excerpt, and Content are required.";
     responseEl.className = "response error";
     return;
   }
 
-  const blogPostHTML = `
+  // Prepare blog content HTML
+  const blogHTML = `
     <article class="post">
       <img src="${image}" alt="${title}">
       <div class="post-content">
-        <h3>${title}</h3>
-        <p>${excerpt}</p>
-        <a href="${link}" class="read-more">Read More →</a>
+        <h1>${title}</h1>
+        ${excerpt ? `<p class="lead">${excerpt}</p>` : ''}
+        <div>${content}</div>
       </div>
     </article>
   `;
 
-  // Wrap it in your full index.html template
+  // Wrap in full page template
   const fullHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Hope Renewed LLC — Biohazard & Trauma Scene Cleanup</title>
+<title>${title} | Hope Renewed LLC</title>
 <link rel="stylesheet" href="style.css" />
 <link rel="icon" href="https://hope-renewed.us/images/logo.png" type="image/png">
 </head>
@@ -93,38 +95,21 @@ form.addEventListener('submit', function(e){
   <a class="btn-call" href="tel:9363375993">Call: 936-337-5993</a>
 </header>
 
-<section class="hero">
-  <div class="hero-left">
-    <div class="eyebrow">AMDECON CERTIFIED • LICENSED & INSURED • 24/7 EMERGENCY RESPONSE</div>
-    <h2>Discreet. Compassionate. Professional.</h2>
-    <p class="lead">
-      Hope Renewed provides expert biohazard and trauma scene cleanup services across Conroe, Houston, and surrounding areas. 
-      Our certified technicians respond 24/7 to crime scenes, unattended deaths, suicides, hoarding, and decomposition cases, ensuring a safe, thorough, and respectful restoration of safety to your property.
-    </p>
-
-    <div class="trusted">
-      <div class="badge">Rapid 24/7 Emergency Response</div>
-      <div class="badge amdecon">AMDECON Certified & Licensed Professionals</div>
-      <div class="badge">Compassionate Care for Sensitive Situations</div>
+<main>
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">AMDECON CERTIFIED • LICENSED & INSURED • 24/7 EMERGENCY RESPONSE</div>
+      <h2>${title}</h2>
+      ${excerpt ? `<p class="lead">${excerpt}</p>` : ''}
     </div>
+  </section>
 
-    <p class="lead" style="margin-top: 15px;">
-      We understand the emotional and physical challenges these situations bring. Every cleanup is handled discreetly, safely, and with the highest standards of biohazard remediation. From containment to odor control and full disinfection, your safety and peace of mind are our priority.
-    </p>
-  </div>
-</section>
-
-<!-- Blog Section -->
-<section class="blog-section">
-  <div class="blog-header">
-    <h2>From Our Blog</h2>
-    <p>Latest updates and insights from Hope Renewed LLC.</p>
-  </div>
-
-  <div class="blog-grid">
-    ${blogPostHTML}
-  </div>
-</section>
+  <section class="blog-section">
+    <div class="blog-grid">
+      ${blogHTML}
+    </div>
+  </section>
+</main>
 
 <footer>
   <p>&copy; ${new Date().getFullYear()} Hope Renewed LLC | Serving Conroe, Houston & surrounding Texas areas<br>
@@ -135,14 +120,14 @@ form.addEventListener('submit', function(e){
 </body>
 </html>`;
 
-  // Create downloadable file
+  // Generate downloadable HTML file
   const blob = new Blob([fullHTML], {type:"text/html"});
-  const linkDownload = document.createElement("a");
-  linkDownload.href = URL.createObjectURL(blob);
-  linkDownload.download = `${title.replace(/\s+/g,'-').toLowerCase()}.html`;
-  linkDownload.click();
+  const downloadLink = document.createElement("a");
+  downloadLink.href = URL.createObjectURL(blob);
+  downloadLink.download = `${title.replace(/\s+/g,'-').toLowerCase()}.html`;
+  downloadLink.click();
 
-  responseEl.textContent = "✅ HTML file generated successfully!";
+  responseEl.textContent = "✅ Full blog HTML generated successfully!";
   responseEl.className = "response success";
   form.reset();
 });
