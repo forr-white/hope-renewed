@@ -108,6 +108,12 @@ h1 {
   margin-bottom: 15px;
 }
 
+.hero-left .mission {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
 .hero-left .trusted {
   display: flex;
   flex-wrap: wrap;
@@ -344,6 +350,12 @@ footer a {
 
   .hero-left p.lead {
     font-size: 1rem;
+  }
+
+  .hero-left p.mission {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
   }
 
   .trusted {
