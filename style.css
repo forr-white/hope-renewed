@@ -240,6 +240,7 @@ footer a {
   .btn-call {
     margin-top: 10px;
     display: inline-block;
+    align-self: center;
   }
 
   .logo {
