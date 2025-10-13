@@ -1,3 +1,6 @@
+/* ========================= */
+/* COLOR VARIABLES & BASE */
+/* ========================= */
 :root {
   --navy: #0b2545;
   --accent: #133767;
@@ -13,7 +16,9 @@ body {
   background: #f8fafc;
 }
 
-/* Top Strip */
+/* ========================= */
+/* TOP STRIP */
+/* ========================= */
 .top-strip {
   background: linear-gradient(90deg, #b91c1c, #ef4444);
   color: #fff;
@@ -28,7 +33,9 @@ body {
   text-decoration: underline;
 }
 
-/* Header */
+/* ========================= */
+/* HEADER */
+/* ========================= */
 header {
   background: var(--white);
   display: flex;
@@ -49,10 +56,6 @@ header {
   width: auto;
 }
 
-@media (max-width:600px) {
-  .logo { height: 60px; }
-}
-
 h1 {
   margin: 0;
   font-size: 1.4rem;
@@ -67,7 +70,9 @@ h1 {
   font-weight: 700;
 }
 
-/* Hero Section */
+/* ========================= */
+/* HERO SECTION */
+/* ========================= */
 .hero {
   display: grid;
   grid-template-columns: 1fr 400px;
@@ -115,7 +120,9 @@ h1 {
   color: var(--white);
 }
 
-/* Card/Form */
+/* ========================= */
+/* CONTACT CARD / FORM */
+/* ========================= */
 .card {
   background: var(--white);
   padding: 20px;
@@ -129,7 +136,7 @@ h1 {
 }
 
 input, textarea {
-  width: 90%;
+  width: 95%;
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
@@ -168,7 +175,9 @@ input:focus, textarea:focus {
 .response.success { color: #16a34a; }
 .response.error { color: #dc2626; }
 
-/* Services Section */
+/* ========================= */
+/* SERVICES SECTION */
+/* ========================= */
 .services {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -195,7 +204,9 @@ input:focus, textarea:focus {
   margin-bottom: 8px;
 }
 
-/* Footer */
+/* ========================= */
+/* FOOTER */
+/* ========================= */
 footer {
   background: var(--navy);
   color: #fff;
@@ -208,116 +219,94 @@ footer a {
   text-decoration: underline;
 }
 
-/* Responsive Hero */
-@media (max-width: 900px) {
+/* ========================= */
+/* RESPONSIVE DESIGN */
+/* ========================= */
+
+/* --- Mobile First (up to 600px) --- */
+@media (max-width: 600px) {
+  header {
+    flex-wrap: wrap;
+    text-align: center;
+    padding: 15px 5%;
+  }
+
+  .brand {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .btn-call {
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  .logo {
+    height: 60px;
+  }
+
   .hero {
-    grid-template-columns: 1fr;
-    padding: 40px 5%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 5%;
     gap: 25px;
   }
 
-  .hero-left, .card {
-    width: 100%;
+  .hero-left h2 {
+    font-size: 1.6rem;
+    line-height: 1.3;
+  }
+
+  .hero-left p.lead {
+    font-size: 1rem;
+  }
+
+  .trusted {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .badge {
+    font-size: 0.9rem;
+  }
+
+  .card {
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  input, textarea {
+    font-size: 1rem;
+  }
+
+  .submit {
+    width: 90%;
+  }
+
+  .services {
+    grid-template-columns: 1fr;
+    padding: 30px 5%;
+  }
+
+  .service-card {
+    text-align: center;
+  }
+
+  .service-card img {
+    height: 200px;
+  }
+
+  footer {
+    font-size: 0.9rem;
+    padding: 25px 10px;
+    line-height: 1.5;
   }
 }
 
-/* ========================= */
-/* MOBILE-FIRST OPTIMIZATION */
-/* ========================= */
-
-/* Base adjustments */
-body {
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-/* Header responsiveness */
-header {
-  flex-wrap: wrap;
-  text-align: center;
-  padding: 15px 5%;
-}
-
-.brand {
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.btn-call {
-  margin-top: 10px;
-  display: inline-block;
-}
-
-/* Hero section */
-.hero {
-  display: flex;
-  flex-direction: column;
-  padding: 30px 5%;
-  gap: 25px;
-}
-
-.hero-left h2 {
-  font-size: 1.6rem;
-  line-height: 1.3;
-}
-
-.hero-left p.lead {
-  font-size: 1rem;
-}
-
-.trusted {
-  flex-direction: column;
-  gap: 8px;
-}
-
-.badge {
-  font-size: 0.9rem;
-}
-
-/* Card/Form on mobile */
-.card {
-  width: 90%;
-  max-width: 400px;
-  margin: 0 auto;
-  align-items: center;
-  text-align: center;
-}
-
-input, textarea {
-  font-size: 1rem;
-}
-
-.submit {
-  width: 90%;
-  align-items: center;
-}
-
-/* Service cards */
-.services {
-  grid-template-columns: 1fr;
-  padding: 30px 5%;
-}
-
-.service-card {
-  text-align: center;
-}
-
-.service-card img {
-  height: 200px;
-}
-
-/* Footer */
-footer {
-  font-size: 0.9rem;
-  padding: 25px 10px;
-  line-height: 1.5;
-}
-
-/* ========================= */
-/* TABLET AND UP (≥600px) */
-/* ========================= */
-@media (min-width: 600px) {
+/* --- Tablet and up (≥600px) --- */
+@media (min-width: 600px) and (max-width: 1023px) {
   header {
     flex-wrap: nowrap;
     text-align: left;
@@ -327,7 +316,7 @@ footer {
     display: grid;
     grid-template-columns: 1fr 400px;
     align-items: start;
-    padding: 50px 10%;
+    padding: 40px 8%;
   }
 
   .trusted {
@@ -339,9 +328,7 @@ footer {
   }
 }
 
-/* ========================= */
-/* LARGE DESKTOP (≥1024px) */
-/* ========================= */
+/* --- Large desktop (≥1024px) --- */
 @media (min-width: 1024px) {
   body {
     font-size: 18px;
