@@ -288,6 +288,7 @@ input, textarea {
 
 .submit {
   width: 80%;
+  align-items: center;
 }
 
 /* Service cards */
