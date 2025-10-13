@@ -32,7 +32,8 @@
 <button id="generate">Generate & Download Post</button>
 
 <script>
-const sheetUrl = "https://script.google.com/macros/s/AKfycbxRgJgTCBLzEb29OaEgHhPeslLBDpDS35JQiTIcykZlOnEikNy0cxDQlFRXye8QRzrd/exec"; // replace with your Apps Script URL
+const sheetUrl = "https://script.google.com/macros/s/AKfycbxRgJgTCBLzEb29OaEgHhPeslLBDpDS35JQiTIcykZlOnEikNy0cxDQlFRXye8QRzrd/exec"; // Replace with your Web App URL
+const SECRET_KEY = "YOUR_SECRET_KEY_HERE"; // Replace with the same secret key as in your Apps Script
 
 function slugify(text){
   return text.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
@@ -44,23 +45,24 @@ document.getElementById('generate').addEventListener('click', async () => {
   const excerpt = document.getElementById('excerpt').value.trim();
   const content = document.getElementById('content').value.trim();
 
-  if(!title || !image || !excerpt || !content){
+  // --- VALIDATION ---
+  if (!title || !image || !excerpt || !content) {
     alert('Please fill in all fields.');
     return;
   }
 
   const slug = slugify(title);
   const filename = `${slug}.html`;
-  const postLink = `posts/${filename}`; // folder structure for your website
+  const postLink = `posts/${filename}`;
 
-  // Generate HTML
+  // --- GENERATE HTML ---
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>${title} | Hope Renewed LLC</title>
-<link rel="icon" href="https://hope-renewed.us/images/logo.png" type="image/png">
+<link rel="icon" href="images/logo.png" type="image/png">
 <style>
 body { font-family:'Inter',sans-serif; background:#f8fafc; color:#0b2545; line-height:1.6; margin:0; padding:0; }
 header { display:flex; justify-content: space-between; align-items:center; padding:20px 8%; background:#fff; box-shadow:0 4px 10px rgba(0,0,0,0.05); }
@@ -105,27 +107,29 @@ ${content}
 </body>
 </html>`;
 
-  // Download HTML
+  // --- DOWNLOAD HTML FILE ---
   const blob = new Blob([html], {type:'text/html'});
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = filename;
   link.click();
 
-  // POST to Google Sheet
+  // --- POST TO GOOGLE SHEET ---
   try {
     const res = await fetch(sheetUrl, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ title, image, excerpt, link: postLink })
+      body: JSON.stringify({ title, image, excerpt, link: postLink, secret: SECRET_KEY })
     });
     const data = await res.json();
-    if(data.status === "success") console.log("Blog post added to Google Sheet!");
-    else console.error("Failed to add to sheet:", data.message);
+    if(data.status === "success"){
+      console.log("Blog post added to Google Sheet!");
+    } else {
+      console.error("Sheet error:", data.message);
+    }
   } catch(err){
     console.error("Error posting to sheet:", err);
   }
-
 });
 </script>
 </body>
