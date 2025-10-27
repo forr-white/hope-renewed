@@ -66,12 +66,15 @@
 
       <iframe name="hidden_iframe" style="display:none;"></iframe>
 
-      <form id="contact-form" method="POST" action="https://script.google.com/macros/s/AKfycbxUu4-1xg55xMKWp7izDnuKS3E8nD6erPtqpUHIyHZkir1le6ysONtMEuaw9bcIAlEH/exec" target="hidden_iframe">
-        <input type="text" name="name" placeholder="Full Name" required>
+      <form id="contact-form" method="POST" action="https://script.google.com/macros/s/AKfycbzwHRhGHwVAXbejI515lKmK_pMXbK9QatsIFHoO9aoaetAvhLV78qjM6k-_9Ao8eaxT/exec" target="hidden_iframe">
+      <input type="text" name="first_name" placeholder="First Name" required>
+      <input type="text" name="last_name" placeholder="Last Name" required>
         <input type="text" name="phone" placeholder="Phone" required>
         <input type="email" name="email" placeholder="Email" required>
         <textarea name="message" rows="4" placeholder="Describe the situation" required></textarea>
-        <button type="submit" class="submit">Send Request</button>
+      <div class="g-recaptcha" data-sitekey="6LePn_grAAAAAJLngyvGK6rfYaRhAgfuG6estr9r"></div>
+      <button type="submit" class="submit">Send Request</button>
+
       </form>
 
       <p id="response" class="response"></p>
@@ -176,16 +179,23 @@ form.addEventListener('submit', function(e) {
     return;
   }
 
-  // Auto-format phone before submission
+  // Format phone before submission
   form.phone.value = `(${digits.substr(0,3)}) ${digits.substr(3,3)}-${digits.substr(6,4)}`;
 
-  responseEl.textContent = "✅ Request sent successfully!";
+  // Get first name for the personalized message
+  const firstName = form.first_name.value.trim().split(" ")[0];
+
+  // Show confirmation immediately
+  responseEl.textContent = `✅ Thanks, ${firstName}! We’ll call you soon.`;
   responseEl.className = "response success show";
 
+  // Reset form shortly after submission
   setTimeout(() => form.reset(), 100);
   setTimeout(() => responseEl.classList.remove('show'), 5000);
 });
 </script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </body>
 </html>
