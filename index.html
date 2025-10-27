@@ -66,7 +66,7 @@
 
       <iframe name="hidden_iframe" style="display:none;"></iframe>
 
-      <form id="contact-form" method="POST" action="https://script.google.com/macros/s/AKfycbzwHRhGHwVAXbejI515lKmK_pMXbK9QatsIFHoO9aoaetAvhLV78qjM6k-_9Ao8eaxT/exec" target="hidden_iframe">
+      <form id="contact-form" method="POST" action="https://script.google.com/macros/s/AKfycbyA6mIav98M-U7-XyaLhfQuskiAhm8uq7SMWRhEOk3FRNXG-PthT99BagpClUn0iwP3/exec" target="hidden_iframe">
       <input type="text" name="first_name" placeholder="First Name" required>
       <input type="text" name="last_name" placeholder="Last Name" required>
         <input type="text" name="phone" placeholder="Phone" required>
@@ -171,6 +171,7 @@ form.addEventListener('submit', function(e) {
   const phoneInput = form.phone.value.trim();
   const digits = phoneInput.replace(/\D/g, "");
 
+  // Validate phone number
   if (digits.length !== 10) {
     e.preventDefault();
     responseEl.textContent = "❌ Please enter a valid 10-digit phone number.";
@@ -179,21 +180,31 @@ form.addEventListener('submit', function(e) {
     return;
   }
 
-  // Format phone before submission
+  // ✅ Validate reCAPTCHA before submission
+  const captchaResponse = grecaptcha.getResponse();
+  if (!captchaResponse) {
+    e.preventDefault();
+    responseEl.textContent = "⚠️ Please verify you're not a robot.";
+    responseEl.className = "response error show";
+    setTimeout(() => responseEl.classList.remove('show'), 5000);
+    return;
+  }
+
+  // Auto-format phone
   form.phone.value = `(${digits.substr(0,3)}) ${digits.substr(3,3)}-${digits.substr(6,4)}`;
 
-  // Get first name for the personalized message
+  // Personalized message
   const firstName = form.first_name.value.trim().split(" ")[0];
-
-  // Show confirmation immediately
   responseEl.textContent = `✅ Thanks, ${firstName}! We’ll call you soon.`;
   responseEl.className = "response success show";
 
-  // Reset form shortly after submission
+  // Reset form & reCAPTCHA after submission
   setTimeout(() => form.reset(), 100);
+  setTimeout(() => grecaptcha.reset(), 500);
   setTimeout(() => responseEl.classList.remove('show'), 5000);
 });
 </script>
+
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
